@@ -4,33 +4,16 @@ import { createFakeContact } from '../utils/createFakeContact.js';
 
 export const addOneContact = async () => {
     try {
-        let data;
-        try {
-            data = await fs.readFile(PATH_DB, "utf-8");
+        const data = await fs.readFile(PATH_DB, "utf-8");
+        let contacts = JSON.parse(data);
 
-        } catch (error) {
-            if (error.code === "ENOENT") {
-                data = "[]";
-            } else {
-                throw error;
-            }
-
-        }
-        let contacts;
-        try {
-            contacts = JSON.parse(data);
-
-        } catch (error) {
-            contacts = [];
-            console.error(error);
-        }
         const newContact = createFakeContact();
         contacts.push(newContact);
 
-        await fs.appendFile(PATH_DB, JSON.stringify(contacts, null, 2), 'utf-8');
-        console.log('One contact added to the database.');
-    } catch (error) {
-        console.error('Error adding contact:', error);
+        await fs.writeFile(PATH_DB, JSON.stringify(contacts, null, 2), "utf-8");
+        console.log("One contact added to the data.");
+    } catch (err) {
+        console.error("Error adding contact:", err);
     }
 };
 
