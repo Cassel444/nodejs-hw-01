@@ -12,7 +12,7 @@ const generateContacts = async (number) => {
         }
 
         await fs.writeFile(PATH_DB, JSON.stringify(contacts, null, 2), "utf-8");
-        console.log(`${number} contacts generated and added to the data.`);
+        console.log(`${number} contacts generated and added to the data`);
     } catch (err) {
         console.error("Error generating contacts:", err);
     }
